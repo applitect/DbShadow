@@ -1,7 +1,7 @@
 = Database Table Replicator (DbShadow)
 :Author: David Thompson, Matt Conroy
 :Email: <dthompsn1@gmail.com> <matt@conroy.cc>
-:Revision: 0.1.0 2017-02-08
+:Revision: 0.0.1 2017-02-08
 
 == Description
 Have you ever had the need to copy data from one database to another? How about between to different types of
@@ -12,7 +12,7 @@ can read data from one database instance and then using primary keys compare, pr
 a separate database instance.
 
 == ReleaseNotes
-0.1.0 - Base code
+0.0.1 - Base code
 
 == Usage
 
