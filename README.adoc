@@ -1,0 +1,18 @@
+= Database Table Replicator (DbShadow)
+:Author: David Thompson, Matt Conroy
+:Email: <dthompsn1@gmail.com> <matt@conroy.cc>
+:Revision: 0.1.0 2017-02-08
+
+== Description
+Have you ever had the need to copy data from one database to another? How about between to different types of
+databases? How about just verifying that your database tables between replicated instances are in sync?
+
+DbShadow is a Java command line application that can help you perform these actions. Using the power of JDBC, it
+can read data from one database instance and then using primary keys compare, propogate, and locate differences within
+a separate database instance.
+
+== ReleaseNotes
+0.1.0 - Base code
+
+== Usage
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t:%x) %m%n"/>
+    </layout>
+  </appender>
+
+  <logger name="org.hibernate">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="org.hibernate.engine.transaction.internal">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="org.hibernate.engine.jdbc.internal">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="HibernateDBConn">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="JDBCIdleConnectionPoolImpl">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="JDBCTransactionPoolImpl">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="IdleConnectionThread">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="ConnPool">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="JDBCConnectionPoolFactory">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+  <logger name="JDBCDriverManager">
+    <level value="WARN" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+   <logger name="org.reflections">
+    <level value="FATAL" />
+    <appender-ref ref="stdout"/>
+  </logger>
+
+    <root>
+    <priority value ="ALL"/>
+    <appender-ref ref="stdout"/>
+  </root>
+</log4j:configuration>
