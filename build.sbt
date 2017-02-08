@@ -13,7 +13,7 @@ initialize := {
     sys.error("Java 8 is required for this project.")
 }
 
-bashScriptExtraDefines += """addJava "-Dlog4j.configuration=file://${app_home}/../conf/log4j.xml"""
+bashScriptExtraDefines += """addJava "-Dlog4j.configuration=file://${app_home}/../conf/log4j.xml""""
 
 libraryDependencies ++= Seq(
     "commons-cli"  % "commons-cli" % "1.3.1",
