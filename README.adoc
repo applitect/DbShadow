@@ -14,5 +14,21 @@ a separate database instance.
 == ReleaseNotes
 0.0.1 - Base code
 
-== Usage
+== Building
+DbShadow uses Scala Build Tool (sbt) in order to build. Clone the repo and type 
+....
+$ sbt clean compile
+....
 
+In order to package the system into a Java binary that's useful for somebody to use:
+....
+$ sbt clean universal:packageZipTarball
+....
+This will produce a tarball that can then be installed with a bash script for launching.
+
+== Usage
+Help usage is available with the command line.
+
+$ dbshadow -- --help
+
+More documentation to follow.
