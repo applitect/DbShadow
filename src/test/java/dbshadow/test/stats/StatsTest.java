@@ -1,17 +1,15 @@
 package dbshadow.test.stats;
-//
-//import java.io.IOException;
-//import java.sql.SQLException;
-//
-//import dbshadow.stats.StatCollector;
-//import dbshadow.table.TableWriter;
 
-// import org.testng.annotations.Test;
-//
-///**
-// * @author matt
-// *
-// */
+import java.io.IOException;
+import java.sql.SQLException;
+
+import dbshadow.stats.StatCollector;
+import dbshadow.table.TableWriter;
+
+/**
+ * @author matt
+ *
+ */
 //public class StatsTest extends SrcDest {
 //	boolean initialFetchCompleted = false;
 //	@Test

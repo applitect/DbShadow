@@ -1,5 +1,6 @@
 package dbshadow;
 
+import dbshadow.exception.IncompleteArgumentException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -10,6 +11,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,12 @@ public class DbShadowOpt {
     public enum WorkType {
         NONE, SYNC, CREATE, APPEND, TRUNC, ADD, DELETE
     };
+
+    private static final String usageStr =
+                    "dwshadow [--add|--create|--sync|--delete|--trunc] [--source tablename|--sql queryStmt] " +
+                    "[--dest tableName] [--srcConfig configFile] [--outfile filename|--destConfig configFile] " +
+                    "{--verbose {n}} " +
+                    "{--rowCountCheck} {--simulate} {--partition size} {--help|--usage}";
 
     private Boolean rowCountError = false;
     private Integer partitionSize;
@@ -31,7 +39,7 @@ public class DbShadowOpt {
     private String verbose;
     private boolean simulate;
 
-    public DbShadowOpt getCommandLineArgs(String args[]) {
+    public DbShadowOpt getCommandLineArgs(String args[]) throws IllegalArgumentException, IncompleteArgumentException, IOException {
         Options opts = new Options();
         OptionGroup work = new OptionGroup();
         work.addOption(Option.builder("a").longOpt("add").desc("Fetch <SOURCE> data and add it to the <DEST> table. " +
@@ -104,13 +112,8 @@ public class DbShadowOpt {
             line = parser.parse(new Options().addOptionGroup(usage), args, true);
             if (line.hasOption("usage") || line.hasOption("help")) {
                 HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp(120,
-                                    "dwshadow [--add|--create|--sync|--delete|--trunc] [--source tablename|--sql queryStmt] " +
-                                         "[--outfile filename|--destConfig configFile] " +
-                                         "[--srcConfig configFile] [--destTableName tableName] {--verbose {n}}" +
-                                         "{--rowCountCheck} {--simulate} {--partition size} {--help|--usage}",
-                                    "", opts, "");
-                System.exit(0);
+                formatter.printHelp(120, usageStr, "", opts, "");
+                throw new IncompleteArgumentException();
             }
 
             line = parser.parse(opts, args);
@@ -153,15 +156,19 @@ public class DbShadowOpt {
             source = line.getOptionValue("source");
             srcCfgFilename = line.getOptionValue("srcConfig");
             final File srcFile = new File(srcCfgFilename);
-            if (!srcFile.exists())
-                errors.add("srcConfig file does not exist.");
+            if (!srcFile.exists()) {
+                System.err.println("srcConfig file does not exist.");
+                throw new IOException();
+            }
 
             // Get Destination configs
             dest = line.getOptionValue("dest");
             destCfgFilename = line.getOptionValue("destConfig");
             final File destFile = new File(destCfgFilename);
-            if (!destFile.exists())
-                errors.add("destConfig file does not exist.");
+            if (!destFile.exists()) {
+                System.err.println("destConfig file does not exist.");
+                throw new IOException();
+            }
 
             setSqlStmt(line.getOptionValue("sql"));
 
@@ -170,10 +177,10 @@ public class DbShadowOpt {
             if (errors.size() > 0 || workType == WorkType.NONE) {
                 for (String error : errors)
                     System.err.println(error);
-                System.exit(-1);
+                throw new IncompleteArgumentException();
             } else if (srcCfgFilename.equals(destCfgFilename)) {
                 System.err.println("Source and destination databases cannot be the same.");
-                System.exit(-1);
+                throw new IllegalArgumentException();
             }
 
         } catch (ParseException exp) {
@@ -181,13 +188,8 @@ public class DbShadowOpt {
             System.err.println("dbshadow: " + exp.getMessage());
 
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(120,
-                                "dwshadow [--add|--create|--sync|--delete|--trunc] [--source tablename|--sql queryStmt] " +
-                                     "[--outfile filename|--destConfig configFile] " +
-                                     "[--srcConfig configFile] [--destTableName tableName] {--verbose {n}}" +
-                                     "{--rowCountCheck} {--simulate} {--partition size} {--help|--usage}",
-                                "", opts, "");
-            System.exit(1);
+            formatter.printHelp(120, usageStr, "", opts, "");
+            throw new IncompleteArgumentException();
         }
         return this;
     }

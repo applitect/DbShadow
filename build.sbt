@@ -31,9 +31,9 @@ libraryDependencies ++= Seq(
     "org.apache.logging.log4j" % "log4j-api" % "2.5",
     "org.apache.logging.log4j" % "log4j-core" % "2.5",
     "org.junit.jupiter" % "junit-jupiter-api" % "5.0.0-M3" % "test",
-    "org.junit.platform" % "junit-platform-runner" % "1.0.0-M2" % "test",
-    "org.junit.jupiter" % "junit-jupiter-engine" % "5.0.0-M2" % "test",
-    "org.junit.vintage" % "junit-vintage-engine" % "4.12.0-M2" % "test",
+    "org.junit.platform" % "junit-platform-runner" % "1.0.0-M3" % "test",
+    "org.junit.jupiter" % "junit-jupiter-engine" % "5.0.0-M3" % "test",
+    "org.junit.vintage" % "junit-vintage-engine" % "4.12.0-M3" % "test",
     "com.novocode" % "junit-interface" % "0.11" % "test"
 )
 

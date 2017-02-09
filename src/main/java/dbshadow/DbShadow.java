@@ -1,5 +1,6 @@
 package dbshadow;
 
+import dbshadow.exception.IncompleteArgumentException;
 import dbshadow.log4j.XLevel;
 import dbshadow.sync.DataSync;
 import dbshadow.table.TableWriter;
@@ -23,7 +24,13 @@ public class DbShadow {
 
     public static void main(String args[]) {
 
-        DbShadowOpt opt = new DbShadowOpt().getCommandLineArgs(args);
+        DbShadowOpt dbo = null;
+        try {
+            dbo = new DbShadowOpt().getCommandLineArgs(args);
+        } catch (IncompleteArgumentException | IOException | IllegalArgumentException e) {
+            System.exit(1);
+        }
+        final DbShadowOpt opt = dbo;
 
         // Before doing anything let's make sure our data connections are closed at shutdown.
         Runtime.getRuntime().addShutdownHook(new Thread() {
