@@ -48,8 +48,12 @@ public class CommandLineOptsTest {
             new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             new DbShadowOpt().getCommandLineArgs(new String[] {"--trunc", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--sql", "select * from blah", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
-            new DbShadowOpt().getCommandLineArgs(new String[] {"--delete", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+            // TODO once delete is brought back make sure the following works.
+//            new DbShadowOpt().getCommandLineArgs(new String[] {"--delete", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
 
+            // Dest does not need to exist. If it doesn't exist, use the same name as source.
+            DbShadowOpt opts = new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+            assertEquals(opts.getDest(), opts.getSource());
         } finally {
             if (f != null)
                 f.delete();
@@ -129,9 +133,6 @@ public class CommandLineOptsTest {
             });
             assertThrows(IncompleteArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
-            });
-            assertThrows(IncompleteArgumentException.class, () -> {
-                new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });
             assertThrows(IncompleteArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--destConfig", path + "destConfig"});
