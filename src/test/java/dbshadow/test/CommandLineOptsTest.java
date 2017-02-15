@@ -73,8 +73,13 @@ public class CommandLineOptsTest {
             f.createNewFile();
             f2 = new File(path + "destConfig");
             f2.createNewFile();
-
+            // Check good line with sql statement
             new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--sql", "select * from blah", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+            // Check to make sure dest table is set with sql statement
+            assertThrows(IncompleteArgumentException.class, () -> {
+            new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--sql", "select * from blah", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+            });
+            // Check for valid sql
             assertThrows(IllegalArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--sql", "not a valid sql statement", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });

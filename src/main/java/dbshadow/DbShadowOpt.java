@@ -152,7 +152,7 @@ public class DbShadowOpt {
             if (line.hasOption("delete"))
                 workType = WorkType.DELETE;
 
-            // Get Source configs
+            // Get Source information
             source = line.getOptionValue("source");
             srcCfgFilename = line.getOptionValue("srcConfig");
             final File srcFile = new File(srcCfgFilename);
@@ -161,8 +161,15 @@ public class DbShadowOpt {
                 throw new IOException();
             }
 
-            // Get Destination configs
+            // Get Destination information
             dest = line.getOptionValue("dest");
+            // Default to the source table if there is one and dest was not set.
+            if (dest == null)
+            	dest = source;
+            if (dest == null) {
+            	System.err.println("destination tablename must be set");
+            	throw new IncompleteArgumentException();
+            }
             destCfgFilename = line.getOptionValue("destConfig");
             final File destFile = new File(destCfgFilename);
             if (!destFile.exists()) {
