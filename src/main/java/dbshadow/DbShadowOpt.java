@@ -171,12 +171,13 @@ public class DbShadowOpt {
             }
             // If the outfile is set then we don't need a config
             String outFilename = line.getOptionValue("outfile");
-            final File outFile = new File(outFilename);
-            if (outFile.exists()) {
-            	System.err.println("outfile already exists, will not overwrite.");
-            	throw new IOException();
-            }
-            if (outFilename == null) {
+            if (outFilename != null) {
+            	final File outFile = new File(outFilename);
+	            if (outFile.exists()) {
+	            	System.err.println("outfile already exists, will not overwrite.");
+	            	throw new IOException();
+	            }
+            } else {
             	destCfgFilename = line.getOptionValue("destConfig");
             	if (destCfgFilename == null) {
             		System.err.println("missing destination config");
@@ -193,9 +194,8 @@ public class DbShadowOpt {
 
             // We can't continue into reading the configs if the args weren't
             // passed in. Have to throw the errors and exit here.
-            if (errors.size() > 0 || workType == WorkType.NONE) {
-                for (String error : errors)
-                    System.err.println(error);
+            if (workType == WorkType.NONE) {
+            	System.err.println("missing dbshadow command");
                 throw new IncompleteArgumentException();
             } else if (srcCfgFilename.equals(destCfgFilename)) {
                 System.err.println("Source and destination databases cannot be the same.");

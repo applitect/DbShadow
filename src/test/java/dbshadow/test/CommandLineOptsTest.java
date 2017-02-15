@@ -133,20 +133,20 @@ public class CommandLineOptsTest {
             f.createNewFile();
             f2 = new File(path + "destConfig");
             f2.createNewFile();
-            assertThrows(IncompleteArgumentException.class, () -> {
+            assertThrows(IllegalArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });
-            assertThrows(IncompleteArgumentException.class, () -> {
+            assertThrows(IllegalArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });
-            assertThrows(IncompleteArgumentException.class, () -> {
+            assertThrows(IllegalArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--destConfig", path + "destConfig"});
             });
             assertThrows(IncompleteArgumentException.class, () -> {
                 new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig"});
             });
-            assertThrows(IncompleteArgumentException.class, () -> {
-                new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "table", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+            assertThrows(IllegalArgumentException.class, () -> {
+                new DbShadowOpt().getCommandLineArgs(new String[] {"--sync", "--source", "table", "--dest", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });
         } finally {
             if (f != null)
@@ -155,4 +155,6 @@ public class CommandLineOptsTest {
                 f2.delete();
         }
     }
+    
+    // TODO need to test optional args.
 }
