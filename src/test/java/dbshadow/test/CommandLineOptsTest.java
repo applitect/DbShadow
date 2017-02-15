@@ -103,15 +103,15 @@ public class CommandLineOptsTest {
             f2 = new File(path + "destConfig");
             f2.createNewFile();
 
-            new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--src", "blah", "--dest", "blah", "--srcConfig", path + "srcConfig", "--outfile", "out.txt",});
+            new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--source", "blah", "--dest", "blah", "--srcConfig", path + "srcConfig", "--outfile", "out.txt",});
 
             assertThrows(IllegalArgumentException.class, () -> {
-                new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--src", "blah", "--dest", "table", "--outfile", "out.txt", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
+                new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--source", "blah", "--dest", "table", "--outfile", "out.txt", "--srcConfig", path + "srcConfig", "--destConfig", path + "destConfig"});
             });
 
             // Make sure we don't overwrite existing file
             assertThrows(IOException.class, () -> {
-                new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--src", "blah", "--srcConfig", path + "srcConfig", "--outfile", path + "srcConfig"});
+                new DbShadowOpt().getCommandLineArgs(new String[] {"--add", "--source", "blah", "--srcConfig", path + "srcConfig", "--outfile", path + "srcConfig"});
             });
 
         } finally {

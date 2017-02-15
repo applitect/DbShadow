@@ -78,7 +78,6 @@ public class DbShadowOpt {
                                .desc("Store the resulting data in the named " + "output file.").build());
         output.addOption(Option.builder("d").longOpt("destConfig").hasArg(true)
                                .desc("The destination database connection" + " config file.").build());
-        output.setRequired(true);
         opts.addOptionGroup(output);
 
         opts.addOption(Option.builder("i").longOpt("srcConfig").hasArg(true).required()
@@ -170,11 +169,24 @@ public class DbShadowOpt {
             	System.err.println("destination tablename must be set");
             	throw new IncompleteArgumentException();
             }
-            destCfgFilename = line.getOptionValue("destConfig");
-            final File destFile = new File(destCfgFilename);
-            if (!destFile.exists()) {
-                System.err.println("destConfig file does not exist.");
-                throw new IOException();
+            // If the outfile is set then we don't need a config
+            String outFilename = line.getOptionValue("outfile");
+            final File outFile = new File(outFilename);
+            if (outFile.exists()) {
+            	System.err.println("outfile already exists, will not overwrite.");
+            	throw new IOException();
+            }
+            if (outFilename == null) {
+            	destCfgFilename = line.getOptionValue("destConfig");
+            	if (destCfgFilename == null) {
+            		System.err.println("missing destination config");
+            		throw new IncompleteArgumentException();
+            	}
+            	final File destFile = new File(destCfgFilename);
+            	if (outFilename == null && !destFile.exists()) {
+            		System.err.println("destConfig file does not exist.");
+            		throw new IOException();
+            	}
             }
 
             setSqlStmt(line.getOptionValue("sql"));
@@ -196,7 +208,7 @@ public class DbShadowOpt {
 
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(120, usageStr, "", opts, "");
-            throw new IncompleteArgumentException();
+            throw new IllegalArgumentException();
         }
         return this;
     }
