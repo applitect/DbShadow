@@ -18,7 +18,7 @@ public class CommandLineOptsTest {
     @Test
     @DisplayName("Look for too few of args")
     void simpleTest() {
-        assertThrows(IncompleteArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new DbShadowOpt().getCommandLineArgs(new String[] {"--src"});
         });
     }
