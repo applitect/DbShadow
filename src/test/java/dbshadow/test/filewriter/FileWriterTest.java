@@ -44,6 +44,7 @@ public class FileWriterTest extends SrcDest {
 					pstmt.setMaxRows(0);
 					try (ResultSet rs = pstmt.executeQuery(); ) {
 						assertNotNull(rs);
+						
 						File f = File.createTempFile("test", "test");
 						assertEquals(0, f.length());
 						f.deleteOnExit();

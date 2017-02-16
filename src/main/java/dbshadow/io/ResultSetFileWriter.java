@@ -40,13 +40,16 @@ public class ResultSetFileWriter {
             fw.write(LINEFEED);
 
             // Add each record to the file.
-            rs.first();
-            do {
-                for (TableColumn col : meta.getColumns())
-                    fw.write(rs.getObject(col.getName()) + DELIMETER);
-                fw.write(LINEFEED);
-            } while (rs.next());
-            log.info("Finished Writing file.");
+            if (rs.first()) {
+	            do {
+	                for (TableColumn col : meta.getColumns()) {
+	                    fw.write(rs.getObject(col.getName()) + DELIMETER);
+	                    log.info(rs.getObject(col.getName()) + DELIMETER);
+	                }
+	                fw.write(LINEFEED);
+	            } while (rs.next());
+	            log.info("Finished Writing file.");
+            }
         } finally {
             try {
                 if (rs != null) rs.close();

@@ -25,6 +25,7 @@ libraryDependencies ++= Seq(
     "org.apache.commons" % "commons-lang3" % "3.4",
     "mysql" % "mysql-connector-java" % "5.1.36",
     "hsqldb" % "hsqldb" % "1.8.0.10",
+    "com.h2database" % "h2" % "1.4.193",
 // oracle doesn't provide their driver in standard maven repos
 //  "com.oracle" % "ojdbc" % "11.2.0.3",
     "com.github.jsqlparser" % "jsqlparser" % "0.9.5",
