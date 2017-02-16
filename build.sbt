@@ -30,6 +30,7 @@ libraryDependencies ++= Seq(
     "com.github.jsqlparser" % "jsqlparser" % "0.9.5",
     "org.apache.logging.log4j" % "log4j-api" % "2.5",
     "org.apache.logging.log4j" % "log4j-core" % "2.5",
+    "org.hsqldb" % "hsqldb" % "2.3.1" % "test",
     "org.junit.jupiter" % "junit-jupiter-api" % "5.0.0-M3" % "test",
     "org.junit.platform" % "junit-platform-runner" % "1.0.0-M3" % "test",
     "org.junit.jupiter" % "junit-jupiter-engine" % "5.0.0-M3" % "test",
