@@ -10,6 +10,7 @@ public enum DBType {
     DB2(new DB2ColumnTypeMap()),
     Oracle(new OracleColumnTypeMap()),
     HSQL(new HSQLColumnTypeMap()),
+    H2(new H2ColumnTypeMap()),
     MYSQL(new MysqlColumnTypeMap()),
     Unknown(new NoMapColumnTypeMap());
 
@@ -29,6 +30,8 @@ public enum DBType {
         final String dbProduct = productName.toLowerCase();
         if (dbProduct.contains("hsql"))
             return DBType.HSQL;
+        else if (dbProduct.contains("h2"))
+        	return DBType.H2;
         else if (dbProduct.contains("oracle"))
             return DBType.Oracle;
         else if (dbProduct.contains("db2"))
