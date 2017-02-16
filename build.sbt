@@ -17,10 +17,10 @@ bashScriptExtraDefines += """addJava "-Dlog4j.configuration=file://${app_home}/.
 
 libraryDependencies ++= Seq(
     "commons-cli"  % "commons-cli" % "1.3.1",
-    "org.hibernate" % "hibernate-entitymanager" % "5.0.2.Final",
-    "org.hibernate" % "hibernate-core" % "5.0.2.Final",
-    "org.hibernate" % "hibernate-java8" % "5.0.2.Final",
-    "org.hibernate" % "hibernate-hikaricp" % "5.0.2.Final",
+    "org.hibernate" % "hibernate-entitymanager" % "5.2.7.Final",
+    "org.hibernate" % "hibernate-core" % "5.2.7.Final",
+    "org.hibernate" % "hibernate-hikaricp" % "5.2.7.Final",
+    "dom4j" % "dom4j" % "1.6.1",
     "com.zaxxer" % "HikariCP" % "2.4.5",
     "org.apache.commons" % "commons-lang3" % "3.4",
     "mysql" % "mysql-connector-java" % "5.1.36",
