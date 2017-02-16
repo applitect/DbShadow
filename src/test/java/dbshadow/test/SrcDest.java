@@ -10,34 +10,29 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 @RunWith(JUnitPlatform.class)
 public class SrcDest {
     public static SessionFactory srcSessionFactory;
     public static SessionFactory destSessionFactory;
 
-
-    private List<ResultSet> resultSets = new ArrayList<ResultSet>();
-    private List<PreparedStatement> pstmts = new ArrayList<PreparedStatement>();
-
     @BeforeAll
-    public void startup() {
-        //Logger.getLogger("org.hibernate").setLevel(Level.DEBUG);
-        File src = new File("src.hibernate.cfg.xml");
+    static void startup() throws URISyntaxException {
+    	URL url = SrcDest.class.getClassLoader().getResource("src.hibernate.cfg.xml");
+        File src = new File(url.toURI());
         srcSessionFactory = new Configuration().configure(src).buildSessionFactory();
         
-        File dest = new File("dest.hibernate.cfg.xml");
+    	url = SrcDest.class.getClassLoader().getResource("dest.hibernate.cfg.xml");
+        File dest = new File(url.toURI());
         destSessionFactory = new Configuration().configure(dest).buildSessionFactory();
 
         Configurator.setRootLevel(XLevel.DEBUG4);
     }
 
     @AfterAll
-    public void shutdown() {
+    static void shutdown() {
     	srcSessionFactory.close();
     	destSessionFactory.close();
     }
