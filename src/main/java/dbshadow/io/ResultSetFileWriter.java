@@ -44,7 +44,6 @@ public class ResultSetFileWriter {
 	            do {
 	                for (TableColumn col : meta.getColumns()) {
 	                    fw.write(rs.getObject(col.getName()) + DELIMETER);
-	                    log.info(rs.getObject(col.getName()) + DELIMETER);
 	                }
 	                fw.write(LINEFEED);
 	            } while (rs.next());

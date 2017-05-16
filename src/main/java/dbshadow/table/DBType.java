@@ -6,6 +6,7 @@ package dbshadow.table;
  * @author matt
  *
  */
+// TODO: this needs to be re-written to handle many more datatypes and make a better transition table.
 public enum DBType {
     DB2(new DB2ColumnTypeMap()),
     Oracle(new OracleColumnTypeMap()),
